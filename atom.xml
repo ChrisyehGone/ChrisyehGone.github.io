@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title><![CDATA[Gone's Blog]]></title>
+  <subtitle><![CDATA[Try not to become a man of success but rather try to become a man of value.——Albert Einstein]]></subtitle>
+  <link href="/atom.xml" rel="self"/>
+  <link href="http://ChrisyehGone.github.io/"/>
+  <updated>2014-06-30T07:21:17.875Z</updated>
+  <id>http://ChrisyehGone.github.io/</id>
+  
+  <author>
+    <name><![CDATA[Chrisyeh]]></name>
+    <email><![CDATA[chrisyehzz@gmail.com]]></email>
+  </author>
+  
+  <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[My First Post]]></title>
+    <link href="http://ChrisyehGone.github.io/2014/06/29/My-First-Post/"/>
+    <id>http://ChrisyehGone.github.io/2014/06/29/My-First-Post/</id>
+    <published>2014-06-29T10:27:09.000Z</published>
+    <updated>2014-06-30T07:02:43.000Z</updated>
+    <content type="html"><![CDATA[<p>很开心今天终于把静态博客弄好了，不过还有很多需要学习的地方，感谢学长的帮助，让我可以顺利搭建起<strong>hexo</strong>环境。<br><a id="more"></a></p>
+]]></content>
+    <summary type="html"><![CDATA[<p>很开心今天终于把静态博客弄好了，不过还有很多需要学习的地方，感谢学长的帮助，让我可以顺利搭建起<strong>hexo</strong>环境。<br>]]></summary>
+    
+  </entry>
+  
+</feed>
