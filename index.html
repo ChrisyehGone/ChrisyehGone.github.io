@@ -59,11 +59,73 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2014-06-29T10:27:09.000Z"><a href="/2014/06/29/My-First-Post/">6月 29 2014</a></time>
+        <time datetime="2014-07-01T02:16:09.000Z"><a href="/2014/07/01/1WPF-UserControl-Series/">7月 01 2014</a></time>
       
       
   
-    <h1 class="title"><a href="/2014/06/29/My-First-Post/">My First Post</a></h1>
+    <h1 class="title"><a href="/2014/07/01/1WPF-UserControl-Series/">WPF用户控件系列教程：(1)文字滚动用户控件</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>首先，我们新建一个UserControl，并命名为MarqueeTextControl，</p>
+<usercontrol x:class="Test.MarqueeTextControl" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"><br>    <canvas cliptobounds="True" name="canMain"><br>        <textblock name="tbmarquee"> </textblock><br>    </canvas><br></usercontrol>
+
+<p>其次，我们需要定义几个属性：</p>
+<ol>
+<li>MarqueeType：滚动的种类，枚举类型</li>
+<li>MarqueeContent：滚动的文字，String类型</li>
+<li>MarqueeTimeInSeconds：滚动的间隔，double类型</li>
+</ol>
+<p>定义如下：<br>    public enum MarqueeType<br>    {<br>        LeftToRight,<br>        RightToLeft,<br>        TopToBottom,<br>        BottomToTop<br>    }</p>
+<pre><code><span class="keyword">private</span> MarqueeType _marqueeType;
+
+<span class="keyword">public</span> MarqueeType MarqueeType
+{
+    <span class="keyword">get</span> { <span class="keyword">return</span> _marqueeType; }
+    <span class="keyword">set</span> { _marqueeType = <span class="keyword">value</span>; }
+}       
+
+<span class="keyword">public</span> String MarqueeContent
+{
+    <span class="keyword">set</span> { tbmarquee.Text = <span class="keyword">value</span>; }
+}
+
+<span class="keyword">private</span> <span class="keyword">double</span> _marqueeTimeInSeconds;
+
+<span class="keyword">public</span> <span class="keyword">double</span> MarqueeTimeInSeconds
+{
+    <span class="keyword">get</span> { <span class="keyword">return</span> _marqueeTimeInSeconds; }
+    <span class="keyword">set</span> { _marqueeTimeInSeconds = <span class="keyword">value</span>; }
+}
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-06-29T02:16:09.000Z"><a href="/2014/06/29/My-First-Post/">6月 29 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/06/29/My-First-Post/">我的第一篇博文</a></h1>
   
 
     </header>
@@ -107,14 +169,33 @@
 </div>
 
   
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/WPF/">WPF</a><small>1</small></li>
+  
+    <li><a href="/categories/畅谈/">畅谈</a><small>1</small></li>
+  
+  </ul>
+</div>
+
 
   
+<div class="widget tagcloud">
+  <h3 class="title">标签云</h3>
+  <div class="entry">
+    <a href="/tags/感悟/" style="font-size: NaNpx;">感悟</a><a href="/tags/文章/" style="font-size: NaNpx;">文章</a>
+  </div>
+</div>
+
 
   <div class="widget tag">
-<h3 class="title"><b>links</b></h3>
-<ul class="entry">
-<li><a href="http://zipperary.com/" title="Zippera's Blog">Zippera</a></li>
-</ul>
+<h3 class="title">友情链接</h3>
+<div class="entry" >
+<a href="http://zipperary.com/" title="Zippera's Blog">Zippera</a>
+<a style="padding-left:10px;" href="http://www.brieftools.info/" title="精简导航">精简导航</a>
+</div>
 </div>
 </aside>
     <div class="clearfix"></div>

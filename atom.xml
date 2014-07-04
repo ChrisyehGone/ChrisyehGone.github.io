@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Try not to become a man of success but rather try to become a man of value.——Albert Einstein]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://ChrisyehGone.github.io/"/>
-  <updated>2014-06-30T11:28:46.702Z</updated>
+  <updated>2014-07-04T02:06:15.256Z</updated>
   <id>http://ChrisyehGone.github.io/</id>
   
   <author>
@@ -15,14 +15,63 @@
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
   
   <entry>
-    <title><![CDATA[My First Post]]></title>
+    <title><![CDATA[WPF用户控件系列教程：(1)文字滚动用户控件]]></title>
+    <link href="http://ChrisyehGone.github.io/2014/07/01/1WPF-UserControl-Series/"/>
+    <id>http://ChrisyehGone.github.io/2014/07/01/1WPF-UserControl-Series/</id>
+    <published>2014-07-01T02:16:09.000Z</published>
+    <updated>2014-07-04T02:05:36.000Z</updated>
+    <content type="html"><![CDATA[<p>首先，我们新建一个UserControl，并命名为MarqueeTextControl，</p>
+<usercontrol x:class="Test.MarqueeTextControl" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"><br>    <canvas cliptobounds="True" name="canMain"><br>        <textblock name="tbmarquee"> </textblock><br>    </canvas><br></usercontrol>
+
+<p>其次，我们需要定义几个属性：</p>
+<ol>
+<li>MarqueeType：滚动的种类，枚举类型</li>
+<li>MarqueeContent：滚动的文字，String类型</li>
+<li>MarqueeTimeInSeconds：滚动的间隔，double类型</li>
+</ol>
+<p>定义如下：<br>    public enum MarqueeType<br>    {<br>        LeftToRight,<br>        RightToLeft,<br>        TopToBottom,<br>        BottomToTop<br>    }</p>
+<pre><code><span class="keyword">private</span> MarqueeType _marqueeType;
+
+<span class="keyword">public</span> MarqueeType MarqueeType
+{
+    <span class="keyword">get</span> { <span class="keyword">return</span> _marqueeType; }
+    <span class="keyword">set</span> { _marqueeType = <span class="keyword">value</span>; }
+}       
+
+<span class="keyword">public</span> String MarqueeContent
+{
+    <span class="keyword">set</span> { tbmarquee.Text = <span class="keyword">value</span>; }
+}
+
+<span class="keyword">private</span> <span class="keyword">double</span> _marqueeTimeInSeconds;
+
+<span class="keyword">public</span> <span class="keyword">double</span> MarqueeTimeInSeconds
+{
+    <span class="keyword">get</span> { <span class="keyword">return</span> _marqueeTimeInSeconds; }
+    <span class="keyword">set</span> { _marqueeTimeInSeconds = <span class="keyword">value</span>; }
+}
+</code></pre>]]></content>
+    
+    
+      <category term="文章" scheme="http://ChrisyehGone.github.io/tags/%E6%96%87%E7%AB%A0/"/>
+    
+      <category term="WPF" scheme="http://ChrisyehGone.github.io/categories/WPF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[我的第一篇博文]]></title>
     <link href="http://ChrisyehGone.github.io/2014/06/29/My-First-Post/"/>
     <id>http://ChrisyehGone.github.io/2014/06/29/My-First-Post/</id>
-    <published>2014-06-29T10:27:09.000Z</published>
-    <updated>2014-06-30T08:53:46.000Z</updated>
+    <published>2014-06-29T02:16:09.000Z</published>
+    <updated>2014-07-01T03:04:57.000Z</updated>
     <content type="html"><![CDATA[<p><img src="/img/mountain_cloud.jpg" alt="淡泊明志，宁静致远"><br>很开心今天终于把静态博客弄好了，不过还有很多需要学习的地方，感谢学长的帮助，让我可以顺利搭建起<strong>hexo</strong>环境。<br><a id="more"></a></p>
 ]]></content>
     <summary type="html"><![CDATA[<p><img src="/img/mountain_cloud.jpg" alt="淡泊明志，宁静致远"><br>很开心今天终于把静态博客弄好了，不过还有很多需要学习的地方，感谢学长的帮助，让我可以顺利搭建起<strong>hexo</strong>环境。<br>]]></summary>
+    
+      <category term="感悟" scheme="http://ChrisyehGone.github.io/tags/%E6%84%9F%E6%82%9F/"/>
+    
+      <category term="畅谈" scheme="http://ChrisyehGone.github.io/categories/%E7%95%85%E8%B0%88/"/>
     
   </entry>
   
