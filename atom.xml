@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Try not to become a man of success but rather try to become a man of value.——Albert Einstein]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://ChrisyehGone.github.io/"/>
-  <updated>2014-07-06T07:10:00.340Z</updated>
+  <updated>2014-07-06T07:13:56.996Z</updated>
   <id>http://ChrisyehGone.github.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://ChrisyehGone.github.io/2014/07/06/2WPF-UserControl-Series/"/>
     <id>http://ChrisyehGone.github.io/2014/07/06/2WPF-UserControl-Series/</id>
     <published>2014-07-06T06:39:02.000Z</published>
-    <updated>2014-07-06T07:09:43.000Z</updated>
+    <updated>2014-07-06T07:13:51.000Z</updated>
     <content type="html"><![CDATA[<p>自定义美观的MessageBox消息框<br><a id="more"></a><br>首先，我们新建一个WPF窗体，并命名为MyMessageBox，然后在试图设计器中添加需要的控件和样式：</p>
 <pre><code>&lt;Window x:Class=<span class="string">"自定义消息框.MyMessageBox"</span>
         xmlns=<span class="string">"http://schemas.microsoft.com/winfx/2006/xaml/presentation"</span>
@@ -96,9 +96,11 @@
 &lt;/Window&gt;
 </code></pre><p>这里，我们用到了4个Label和1个TextBlock控件，其中有两个作为按钮。样式的话大家可以根据自己的喜好设定，主要写在Window.Resources中。</p>
 <p>其次，我们需要定义2个属性：</p>
-<pre><code><span class="number">1.</span> Title：消息的标题，<span class="keyword">String</span>类型，默认值为“消息”
-<span class="number">2.</span> <span class="keyword">Message</span>：消息的内容，<span class="keyword">String</span>类型
-</code></pre><p>定义如下：</p>
+<ol>
+<li>Title：消息的标题，String类型，默认值为“消息”</li>
+<li>Message：消息的内容，String类型</li>
+</ol>
+<p>定义如下：</p>
 <pre><code><span class="keyword">public</span> <span class="keyword">new</span> <span class="keyword">string</span> Title
 {
     <span class="keyword">get</span> { <span class="keyword">return</span> <span class="keyword">this</span>.title.Content.ToString(); }

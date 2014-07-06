@@ -144,9 +144,11 @@
 &lt;/Window&gt;
 </code></pre><p>这里，我们用到了4个Label和1个TextBlock控件，其中有两个作为按钮。样式的话大家可以根据自己的喜好设定，主要写在Window.Resources中。</p>
 <p>其次，我们需要定义2个属性：</p>
-<pre><code><span class="number">1.</span> Title：消息的标题，<span class="keyword">String</span>类型，默认值为“消息”
-<span class="number">2.</span> <span class="keyword">Message</span>：消息的内容，<span class="keyword">String</span>类型
-</code></pre><p>定义如下：</p>
+<ol>
+<li>Title：消息的标题，String类型，默认值为“消息”</li>
+<li>Message：消息的内容，String类型</li>
+</ol>
+<p>定义如下：</p>
 <pre><code><span class="keyword">public</span> <span class="keyword">new</span> <span class="keyword">string</span> Title
 {
     <span class="keyword">get</span> { <span class="keyword">return</span> <span class="keyword">this</span>.title.Content.ToString(); }
