@@ -1,0 +1,345 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>WPF系列教程：(2)自定义MessageBox消息框 | Gone&#39;s Blog</title>
+  <meta name="author" content="Chrisyeh">
+  
+  <meta name="description" content="Sorrow calls no time that&#39;s gone.">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="WPF系列教程：(2)自定义MessageBox消息框"/>
+  <meta property="og:site_name" content="Gone&#39;s Blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link rel="shortcut icon" href="/favicon.ico"/>
+  <link rel="bookmark" href="/favicon.ico"/>
+
+  <link rel="alternate" href="/atom.xml" title="Gone&#39;s Blog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Gone&#39;s Blog</a></h1>
+  <h2><a href="/">Try not to become a man of success but rather try to become a man of value.——Albert Einstein</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+      <li><a href="/photos">Photos</a></li>
+    
+	<li> <a href="/atom.xml">RSS</a> </li>
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-07-06T06:39:02.000Z"><a href="/2014/07/06/2WPF-UserControl-Series/">7月 06 2014</a></time>
+      
+      
+  
+    <h1 class="title">WPF系列教程：(2)自定义MessageBox消息框</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>自定义美观的MessageBox消息框<br><a id="more"></a><br>首先，我们新建一个WPF窗体，并命名为MyMessageBox，然后在试图设计器中添加需要的控件和样式：</p>
+<pre><code>&lt;Window x:Class=<span class="string">"自定义消息框.MyMessageBox"</span>
+        xmlns=<span class="string">"http://schemas.microsoft.com/winfx/2006/xaml/presentation"</span>
+        xmlns:x=<span class="string">"http://schemas.microsoft.com/winfx/2006/xaml"</span>
+        Title=<span class="string">"MyMessageBox"</span>  Width=<span class="string">"400"</span> ResizeMode=<span class="string">"NoResize"</span> 
+        SizeToContent=<span class="string">"Height"</span> WindowStyle=<span class="string">"None"</span> <span class="keyword">Background</span>=<span class="string">"Transparent"</span> WindowStartupLocation=<span class="string">"CenterScreen"</span>
+        AllowsTransparency=<span class="string">"True"</span> MouseLeftButtonDown=<span class="string">"Window_MouseLeftButtonDown"</span> KeyDown=<span class="string">"Window_KeyDown"</span>&gt;
+    &lt;Window.Resources&gt;
+        &lt;<span class="keyword">Style</span> x:Key=<span class="string">"lbcloseStyle"</span> TargetType=<span class="string">"Label"</span>&gt;
+            &lt;<span class="keyword">Setter</span> <span class="keyword">Property</span>=<span class="string">"Background"</span>  <span class="keyword">Value</span>=<span class="string">"#99FFFFFF"</span>&gt;&lt;/<span class="keyword">Setter</span>&gt;
+            &lt;<span class="keyword">Style</span>.Triggers&gt;
+                &lt;<span class="keyword">Trigger</span> <span class="keyword">Property</span>=<span class="string">"IsMouseOver"</span> <span class="keyword">Value</span>=<span class="string">"True"</span>&gt;
+                    &lt;<span class="keyword">Trigger</span>.Setters&gt;
+                        &lt;<span class="keyword">Setter</span> <span class="keyword">Property</span>=<span class="string">"Foreground"</span> <span class="keyword">Value</span>=<span class="string">"#44990000"</span> /&gt;
+                        &lt;<span class="keyword">Setter</span> <span class="keyword">Property</span>=<span class="string">"Background"</span> <span class="keyword">Value</span>=<span class="string">"#44FFFFFF"</span> /&gt;
+                        &lt;<span class="keyword">Setter</span> <span class="keyword">Property</span>=<span class="string">"Effect"</span>&gt;
+                            &lt;<span class="keyword">Setter</span>.<span class="keyword">Value</span>&gt;
+                                &lt;DropShadowEffect ShadowDepth=<span class="string">"4"</span> BlurRadius=<span class="string">"5"</span>/&gt;
+                            &lt;/<span class="keyword">Setter</span>.<span class="keyword">Value</span>&gt;
+                        &lt;/<span class="keyword">Setter</span>&gt;
+                    &lt;/<span class="keyword">Trigger</span>.Setters&gt;
+                &lt;/<span class="keyword">Trigger</span>&gt;
+            &lt;/<span class="keyword">Style</span>.Triggers&gt;
+        &lt;/<span class="keyword">Style</span>&gt;
+        &lt;<span class="keyword">Style</span> x:Key=<span class="string">"lbconfirmStyle"</span> TargetType=<span class="string">"Label"</span>&gt;
+            &lt;<span class="keyword">Setter</span> <span class="keyword">Property</span>=<span class="string">"Background"</span>  <span class="keyword">Value</span>=<span class="string">"#55FFFFFF"</span>&gt;&lt;/<span class="keyword">Setter</span>&gt;
+            &lt;<span class="keyword">Style</span>.Triggers&gt;
+                &lt;<span class="keyword">Trigger</span> <span class="keyword">Property</span>=<span class="string">"IsMouseOver"</span> <span class="keyword">Value</span>=<span class="string">"True"</span>&gt;
+                    &lt;<span class="keyword">Trigger</span>.Setters&gt;
+                        &lt;<span class="keyword">Setter</span> <span class="keyword">Property</span>=<span class="string">"Background"</span> <span class="keyword">Value</span>=<span class="string">"#33FFFFFF"</span> /&gt;
+                        &lt;<span class="keyword">Setter</span> <span class="keyword">Property</span>=<span class="string">"Effect"</span>&gt;
+                            &lt;<span class="keyword">Setter</span>.<span class="keyword">Value</span>&gt;
+                                &lt;DropShadowEffect ShadowDepth=<span class="string">"4"</span> BlurRadius=<span class="string">"5"</span>/&gt;
+                            &lt;/<span class="keyword">Setter</span>.<span class="keyword">Value</span>&gt;
+                        &lt;/<span class="keyword">Setter</span>&gt;
+                    &lt;/<span class="keyword">Trigger</span>.Setters&gt;
+                &lt;/<span class="keyword">Trigger</span>&gt;
+            &lt;/<span class="keyword">Style</span>.Triggers&gt;
+        &lt;/<span class="keyword">Style</span>&gt;
+    &lt;/Window.Resources&gt;
+    &lt;<span class="keyword">Grid</span>&gt;
+        &lt;Border CornerRadius=<span class="string">"5"</span> Margin=<span class="string">"10"</span> BorderThickness=<span class="string">"2"</span> BorderBrush=<span class="string">"White"</span> <span class="keyword">Opacity</span>=<span class="string">"0.8"</span>&gt;
+            &lt;Border.Effect&gt;
+                &lt;DropShadowEffect ShadowDepth=<span class="string">"0"</span> Color=<span class="string">"#FF414141"</span> BlurRadius=<span class="string">"8"</span>/&gt;
+            &lt;/Border.Effect&gt;
+            &lt;Border <span class="keyword">Background</span>=<span class="string">"Black"</span> <span class="keyword">Opacity</span>=<span class="string">"0.5"</span> Margin=<span class="string">"0"</span> CornerRadius=<span class="string">"5"</span>/&gt;
+        &lt;/Border&gt;
+        &lt;<span class="keyword">Grid</span> Margin=<span class="string">"14"</span> x:Name=<span class="string">"MainGrid"</span>&gt;
+            &lt;<span class="keyword">Grid</span>.RowDefinitions&gt;
+                &lt;RowDefinition Height=<span class="string">"30"</span> &gt;&lt;/RowDefinition&gt;
+                &lt;RowDefinition Height=<span class="string">"*"</span>&gt;&lt;/RowDefinition&gt;
+                &lt;RowDefinition Height=<span class="string">"30"</span>&gt;&lt;/RowDefinition&gt;
+            &lt;/<span class="keyword">Grid</span>.RowDefinitions&gt;
+            &lt;<span class="keyword">Grid</span> x:Name=<span class="string">"LayoutRoot"</span> <span class="keyword">Grid</span>.<span class="keyword">Row</span>=<span class="string">"1"</span> Margin=<span class="string">"0 10"</span>&gt;
+                &lt;<span class="keyword">Label</span>  Foreground=<span class="string">"White"</span> <span class="keyword">FontSize</span>=<span class="string">"20"</span> HorizontalAlignment=<span class="string">"Center"</span> VerticalAlignment=<span class="string">"Center"</span>&gt;
+                    &lt;TextBlock x:Name=<span class="string">"lblMessage"</span> <span class="keyword">TextAlignment</span>=<span class="string">"Center"</span> Width=<span class="string">"300"</span> TextWrapping=<span class="string">"Wrap"</span>&gt;
+                    &lt;/TextBlock&gt;
+                &lt;/<span class="keyword">Label</span>&gt;
+            &lt;/<span class="keyword">Grid</span>&gt;
+            &lt;<span class="keyword">Label</span> x:Name=<span class="string">"confirm"</span> Content=<span class="string">"确定"</span> <span class="keyword">Grid</span>.<span class="keyword">Row</span>=<span class="string">"2"</span> <span class="keyword">Style</span>=<span class="string">"{StaticResource lbconfirmStyle}"</span> <span class="keyword">FontSize</span>=<span class="string">"16"</span> Height=<span class="string">"30"</span> Width=<span class="string">"50"</span> Foreground=<span class="string">"White"</span>
+               VerticalAlignment=<span class="string">"Top"</span> HorizontalAlignment=<span class="string">"Center"</span> MouseLeftButtonDown=<span class="string">"close_MouseLeftButtonDown"</span>
+               VerticalContentAlignment=<span class="string">"Center"</span> HorizontalContentAlignment=<span class="string">"Center"</span>&gt;&lt;/<span class="keyword">Label</span>&gt;
+            &lt;<span class="keyword">Label</span> x:Name=<span class="string">"close"</span> Content=<span class="string">"关闭"</span> <span class="keyword">Style</span>=<span class="string">"{StaticResource lbcloseStyle}"</span> <span class="keyword">FontSize</span>=<span class="string">"16"</span> Height=<span class="string">"30"</span> Width=<span class="string">"50"</span> Foreground=<span class="string">"White"</span>
+               VerticalAlignment=<span class="string">"Top"</span> HorizontalAlignment=<span class="string">"Right"</span> MouseLeftButtonDown=<span class="string">"close_MouseLeftButtonDown"</span>
+               VerticalContentAlignment=<span class="string">"Center"</span> HorizontalContentAlignment=<span class="string">"Center"</span>&gt;&lt;/<span class="keyword">Label</span>&gt;
+            &lt;<span class="keyword">Label</span> x:Name=<span class="string">"title"</span> Content=<span class="string">"消息"</span> <span class="keyword">FontSize</span>=<span class="string">"16"</span> Height=<span class="string">"30"</span> Foreground=<span class="string">"White"</span>
+               VerticalAlignment=<span class="string">"Top"</span> HorizontalAlignment=<span class="string">"Left"</span> VerticalContentAlignment=<span class="string">"Center"</span> HorizontalContentAlignment=<span class="string">"Center"</span> &gt;
+                &lt;<span class="keyword">Label</span>.Effect&gt;
+                    &lt;DropShadowEffect BlurRadius=<span class="string">"5"</span> ShadowDepth=<span class="string">"3"</span> Color=<span class="string">"#99FFFFFF"</span>&gt;&lt;/DropShadowEffect&gt;
+                &lt;/<span class="keyword">Label</span>.Effect&gt;
+            &lt;/<span class="keyword">Label</span>&gt;
+        &lt;/<span class="keyword">Grid</span>&gt;
+    &lt;/<span class="keyword">Grid</span>&gt;
+&lt;/Window&gt;
+</code></pre><p>这里，我们用到了4个Label和1个TextBlock控件，其中有两个作为按钮。样式的话大家可以根据自己的喜好设定，主要写在Window.Resources中。</p>
+<p>其次，我们需要定义2个属性：</p>
+<pre><code><span class="number">1.</span> Title：消息的标题，<span class="keyword">String</span>类型，默认值为“消息”
+<span class="number">2.</span> <span class="keyword">Message</span>：消息的内容，<span class="keyword">String</span>类型
+</code></pre><p>定义如下：</p>
+<pre><code><span class="keyword">public</span> <span class="keyword">new</span> <span class="keyword">string</span> Title
+{
+    <span class="keyword">get</span> { <span class="keyword">return</span> <span class="keyword">this</span>.title.Content.ToString(); }
+    <span class="keyword">set</span> { <span class="keyword">this</span>.title.Content = <span class="keyword">value</span>; }
+}
+
+<span class="keyword">public</span> <span class="keyword">string</span> Message
+{
+    <span class="keyword">get</span> { <span class="keyword">return</span> <span class="keyword">this</span>.lblMessage.Text; }
+    <span class="keyword">set</span> { <span class="keyword">this</span>.lblMessage.Text = <span class="keyword">value</span>; }
+}
+</code></pre><p>接下来就是模拟MESSAGEBOX.Show这个方法了。我们用重载的方式，写了两个方法：</p>
+<pre><code><span class="comment"><span class="xmlDocTag">///</span> <span class="xmlDocTag">&lt;summary&gt;</span></span>
+<span class="comment"><span class="xmlDocTag">///</span> 静态方法1 模拟MESSAGEBOX.Show方法</span>
+<span class="comment"><span class="xmlDocTag">///</span> <span class="xmlDocTag">&lt;/summary&gt;</span></span>
+<span class="comment"><span class="xmlDocTag">///</span> <span class="xmlDocTag">&lt;param name="msg"&gt;</span>消息<span class="xmlDocTag">&lt;/param&gt;</span></span>
+<span class="comment"><span class="xmlDocTag">///</span> <span class="xmlDocTag">&lt;returns&gt;</span>bool?<span class="xmlDocTag">&lt;/returns&gt;</span></span>
+<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">bool</span>? <span class="title">Show</span>(<span class="keyword">string</span> msg)
+{
+    <span class="keyword">var</span> msgBox = <span class="keyword">new</span> MyMessageBox();
+    msgBox.Message = msg;
+    <span class="keyword">return</span> msgBox.ShowDialog();
+}
+
+<span class="comment"><span class="xmlDocTag">///</span> <span class="xmlDocTag">&lt;summary&gt;</span></span>
+<span class="comment"><span class="xmlDocTag">///</span> 静态方法2 模拟MESSAGEBOX.Show方法</span>
+<span class="comment"><span class="xmlDocTag">///</span> <span class="xmlDocTag">&lt;/summary&gt;</span></span>
+<span class="comment"><span class="xmlDocTag">///</span> <span class="xmlDocTag">&lt;param name="title"&gt;</span>标题<span class="xmlDocTag">&lt;/param&gt;</span></span>
+<span class="comment"><span class="xmlDocTag">///</span> <span class="xmlDocTag">&lt;param name="msg"&gt;</span>消息<span class="xmlDocTag">&lt;/param&gt;</span></span>
+<span class="comment"><span class="xmlDocTag">///</span> <span class="xmlDocTag">&lt;returns&gt;</span>bool?<span class="xmlDocTag">&lt;/returns&gt;</span></span>
+<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">bool</span>? <span class="title">Show</span>(<span class="keyword">string</span> title, <span class="keyword">string</span> msg)
+{
+    <span class="keyword">var</span> msgBox = <span class="keyword">new</span> MyMessageBox();
+    msgBox.Title = title;
+    msgBox.Message = msg;
+    <span class="keyword">return</span> msgBox.ShowDialog();
+}
+</code></pre><p>还有其他的几个事件:</p>
+<pre><code><span class="comment"><span class="xmlDocTag">///</span> <span class="xmlDocTag">&lt;summary&gt;</span></span>
+<span class="comment"><span class="xmlDocTag">///</span> 关闭按钮点击事件</span>
+<span class="comment"><span class="xmlDocTag">///</span> <span class="xmlDocTag">&lt;/summary&gt;</span></span>
+<span class="comment"><span class="xmlDocTag">///</span> <span class="xmlDocTag">&lt;param name="sender"&gt;</span>对象<span class="xmlDocTag">&lt;/param&gt;</span></span>
+<span class="comment"><span class="xmlDocTag">///</span> <span class="xmlDocTag">&lt;param name="e"&gt;</span>事件参数<span class="xmlDocTag">&lt;/param&gt;</span></span>
+<span class="keyword">private</span> <span class="keyword">void</span> <span class="title">close_MouseLeftButtonDown</span>(<span class="keyword">object</span> sender, MouseButtonEventArgs e)
+{
+    Close();
+}
+
+<span class="comment"><span class="xmlDocTag">///</span> <span class="xmlDocTag">&lt;summary&gt;</span></span>
+<span class="comment"><span class="xmlDocTag">///</span> 窗体拖动事件</span>
+<span class="comment"><span class="xmlDocTag">///</span> <span class="xmlDocTag">&lt;/summary&gt;</span></span>
+<span class="comment"><span class="xmlDocTag">///</span> <span class="xmlDocTag">&lt;param name="sender"&gt;</span>对象<span class="xmlDocTag">&lt;/param&gt;</span></span>
+<span class="comment"><span class="xmlDocTag">///</span> <span class="xmlDocTag">&lt;param name="e"&gt;</span>事件参数<span class="xmlDocTag">&lt;/param&gt;</span></span>
+<span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Window_MouseLeftButtonDown</span>(<span class="keyword">object</span> sender, MouseButtonEventArgs e)
+{
+    <span class="keyword">if</span> (e.LeftButton == MouseButtonState.Pressed)
+        DragMove();
+}
+
+<span class="comment"><span class="xmlDocTag">///</span> <span class="xmlDocTag">&lt;summary&gt;</span></span>
+<span class="comment"><span class="xmlDocTag">///</span> 键盘按下事件</span>
+<span class="comment"><span class="xmlDocTag">///</span> <span class="xmlDocTag">&lt;/summary&gt;</span></span>
+<span class="comment"><span class="xmlDocTag">///</span> <span class="xmlDocTag">&lt;param name="sender"&gt;</span>对象<span class="xmlDocTag">&lt;/param&gt;</span></span>
+<span class="comment"><span class="xmlDocTag">///</span> <span class="xmlDocTag">&lt;param name="e"&gt;</span>事件参数<span class="xmlDocTag">&lt;/param&gt;</span></span>
+<span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Window_KeyDown</span>(<span class="keyword">object</span> sender, KeyEventArgs e)
+{
+    <span class="keyword">if</span> (e.Key == Key.Space || e.Key == Key.Enter)<span class="comment">//空格或回车</span>
+    {
+        close_MouseLeftButtonDown(sender, <span class="keyword">null</span>);
+    }
+}
+</code></pre><p>最后就是调用了，在代码中写上：</p>
+<pre><code>MyMessageBox.<span class="operator"><span class="keyword">Show</span>(<span class="string">"自定义美观的MessageBox消息框！很好看，有木有!\\(^_^)/，还能自动换行哦!"</span>);</span>
+</code></pre><p>附上执行结果贴图：<br><img src="/img/MyMessageBox.png" alt="自定义美观的MessageBox消息框"></p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/WPF/">WPF</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/文章/">文章</a>
+  </div>
+
+        <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a title="分享到QQ空间" href="#" class="bds_qzone" data-cmd="qzone"></a><a title="分享到新浪微博" href="#" class="bds_tsina" data-cmd="tsina"></a><a title="分享到腾讯微博" href="#" class="bds_tqq" data-cmd="tqq"></a><a title="分享到人人网" href="#" class="bds_renren" data-cmd="renren"></a><a title="分享到微信" href="#" class="bds_weixin" data-cmd="weixin"></a></div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+ <nav id="pagination" >
+    
+    
+    <a href="/2014/07/01/1WPF-UserControl-Series/" class="alignright next" >下一页</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+<section id="comment">
+  <!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="" data-title="" data-url=""></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"chrisyeh"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:ChrisyehGone.github.io">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/WPF/">WPF</a><small>2</small></li>
+  
+    <li><a href="/categories/畅谈/">畅谈</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签云</h3>
+  <div class="entry">
+    <a href="/tags/感悟/" style="font-size: 10.00px;">感悟</a><a href="/tags/文章/" style="font-size: 20.00px;">文章</a>
+  </div>
+</div>
+
+
+  <div class="widget tag">
+<h3 class="title">友情链接</h3>
+<div class="entry" >
+<a href="http://zipperary.com/" title="Zippera's Blog" target="_blank">Zippera</a>
+<a style="padding-left:10px;" href="http://www.brieftools.info/" title="精简导航" target="_blank">精简导航</a>
+</div>
+</div>
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2014 Chrisyeh
+  
+</div>
+<div class="clearfix"></div>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fdf4829d65ee90329e1d4a291ac6b8f2d' type='text/javascript'%3E%3C/script%3E"));
+</script></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>
